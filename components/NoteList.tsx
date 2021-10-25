@@ -1,13 +1,7 @@
 import * as React from "react";
-// import styled from 'styled-components';
 import axios from "axios";
 
 import NotePreview from "./NotePreview";
-// import { NoteInterface } from "../types";
-
-// interface NoteListProps {
-//   notes: NoteInterface[];
-// }
 
 const NoteList = (): JSX.Element => {
   const [loading, setLoading] = React.useState(false);

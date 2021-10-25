@@ -3,7 +3,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import startCase from "lodash/startCase";
 
-import { NoteInterface } from "../types";
+import { NoteInterface } from "types";
 
 interface NoteDetailProps {
   note: NoteInterface;

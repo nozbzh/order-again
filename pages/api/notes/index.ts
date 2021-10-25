@@ -1,12 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import Note from "../../../data/Note";
+import Note from "models/Note";
 import {
   respondOk,
   respondServerError,
   respondUnprocessableEntity,
   respondCreated
-} from "../../../helpers/Responses";
+} from "helpers/Responses";
 
 async function createNote(req: NextApiRequest, res: NextApiResponse) {
   const { title, body } = req.body;

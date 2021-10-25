@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import Link from "next/link";
 
-import NoteList from "../components/NoteList";
+import NoteList from "components/NoteList";
 
 const Container = styled.div`
   display: flex;

@@ -1,5 +1,5 @@
 import Result from "./Response";
-import logger from "../utils/logger";
+import logger from "utils/logger";
 import type { NextApiResponse } from "next";
 
 export function respondNotFound(resp: NextApiResponse, message = "not found") {

@@ -5,9 +5,9 @@ import {
   respondUnprocessableEntity,
   respondNotFound,
   respondOk
-} from "../../../helpers/Responses";
+} from "helpers/Responses";
 
-import Note from "../../../data/Note";
+import Note from "models/Note";
 
 async function updateNote(req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query;

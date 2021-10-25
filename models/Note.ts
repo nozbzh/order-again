@@ -1,9 +1,9 @@
-import { promises as fs } from "fs";
 import { v4 as uuid } from "uuid";
 
-import { InvalidInputError, NotFoundError } from "../errors";
-import logger from "../utils/logger";
-import { NoteInterface, NoteInput } from "../types";
+import { deleteEntry, insertEntry, findEntry, getAllEntries } from "data";
+import { InvalidInputError, NotFoundError } from "errors";
+import logger from "utils/logger";
+import { NoteInterface, NoteInput } from "types";
 
 interface NotesData {
   [key: string]: NoteInterface;
@@ -20,8 +20,8 @@ class Note {
   id: string;
   lastUpdatedAt: number;
 
-  constructor(input: NoteInput & NotesInternalData) {
-    const { title, body, id, lastUpdatedAt } = input;
+  constructor(attributes: NoteInput & NotesInternalData) {
+    const { title, body, id, lastUpdatedAt } = attributes;
 
     if (!title && !body) {
       throw new InvalidInputError("Title and body are required");
@@ -51,34 +51,16 @@ class Note {
     return { id, title, body, lastUpdatedAt };
   }
 
-  private static get getDataFileName(): string {
-    return `${process.cwd()}/data/NotesData.json`;
-  }
-
-  private static async getData(): Promise<NotesData> {
-    try {
-      const rawData = await fs.readFile(this.getDataFileName, "utf8");
-      return JSON.parse(rawData);
-    } catch (e: any) {
-      logger.error(e);
-      return {};
-    }
-  }
-
-  private static async setData(data): Promise<void> {
-    await fs.writeFile(this.getDataFileName, JSON.stringify(data));
-  }
-
   static async create(note: NoteInput): Promise<NoteInterface> {
     try {
-      const data = await this.getData();
       const newNote = new this(note);
       newNote.lastUpdatedAt = +Date.now();
 
-      data[newNote.id] = newNote;
-      await this.setData(data);
+      const jsonNote = newNote.asJson();
 
-      return newNote.asJson();
+      await insertEntry<NoteInterface>(jsonNote);
+
+      return jsonNote;
     } catch (e: any) {
       logger.error(e);
       throw e;
@@ -87,14 +69,13 @@ class Note {
 
   static async find(id: string): Promise<NoteInterface> {
     try {
-      const data = await this.getData();
-      const noteData = data[id];
+      const noteData = await findEntry<NoteInterface>(id);
 
       if (!noteData) {
         throw new NotFoundError("note");
       }
 
-      return new this(noteData).asJson();
+      return noteData;
     } catch (e: any) {
       logger.error(e);
       throw e;
@@ -103,11 +84,11 @@ class Note {
 
   static async all(): Promise<NoteInterface[]> {
     try {
-      const allData = await this.getData();
+      const allNotes = await getAllEntries<NotesData>();
 
-      return Object.values(allData)
-        .sort((a, b) => b.lastUpdatedAt - a.lastUpdatedAt)
-        .map(data => new this(data).asJson());
+      return Object.values(allNotes).sort(
+        (a, b) => b.lastUpdatedAt - a.lastUpdatedAt
+      );
     } catch (e: any) {
       logger.error(e);
       throw e;
@@ -116,13 +97,9 @@ class Note {
 
   static async delete(id: string): Promise<boolean> {
     try {
-      const data = await this.getData();
-
       // make sure note exists (will throw if does not exist)
       await this.find(id);
-
-      delete data[id];
-      await this.setData(data);
+      await deleteEntry<NoteInterface>(id);
 
       return true;
     } catch (e: any) {
@@ -133,19 +110,15 @@ class Note {
 
   static async update(note: NoteInterface): Promise<NoteInterface> {
     try {
-      const data = await this.getData();
+      // make sure note exists (will throw if does not exist)
       const existingNote = await this.find(note.id);
-
-      if (!existingNote) {
-        throw new NotFoundError("note");
-      }
 
       const updatedNote = new this({ ...existingNote, ...note });
       updatedNote.lastUpdatedAt = +Date.now();
-      data[updatedNote.id] = updatedNote;
-      await this.setData(data);
+      const jsonNote = updatedNote.asJson();
 
-      return updatedNote.asJson();
+      await insertEntry<NoteInterface>(jsonNote);
+      return jsonNote;
     } catch (e: any) {
       logger.error(e);
       throw e;

@@ -1,9 +1,9 @@
 import React from "react";
 
-import Note from "../../data/Note";
-import NoteDetail from "../../components/NoteDetail";
+import Note from "models/Note";
+import NoteDetail from "components/NoteDetail";
 
-import { NoteInterface } from "../../types";
+import { NoteInterface } from "types";
 import logger from "utils/logger";
 
 interface NotePageProps {

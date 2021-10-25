@@ -2,7 +2,7 @@ import * as React from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
-import { NoteInterface } from "../types";
+import { NoteInterface } from "types";
 
 interface NoteFormProps {
   note?: NoteInterface;

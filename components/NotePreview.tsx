@@ -5,7 +5,7 @@ import startCase from "lodash/startCase";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-import { NoteInterface } from "../types";
+import { NoteInterface } from "types";
 
 interface NoteProps {
   note: NoteInterface;

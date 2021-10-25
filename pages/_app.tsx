@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Toaster } from "react-hot-toast";
 import Link from "next/link";
 
-import "../styles/global.css";
+import "styles/global.css";
 
 const Layout = styled.div`
   width: 100%;
