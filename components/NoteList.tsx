@@ -1,6 +1,7 @@
 import * as React from "react";
 import axios from "axios";
 
+import { notifyError, notifySuccess, getErrorMessage } from "utils/ui";
 import NotePreview from "./NotePreview";
 
 const NoteList = (): JSX.Element => {
@@ -15,8 +16,7 @@ const NoteList = (): JSX.Element => {
       const response = await axios.get(url);
       setNotes(response?.data?.payload || []);
     } catch (e: any) {
-      // notifyError(`Error while fetching app configs: ${getErrorMessage(err)}`);
-      throw e;
+      notifyError(`Could not fetch notes: ${getErrorMessage(e)}`);
     }
 
     setLoading(false);

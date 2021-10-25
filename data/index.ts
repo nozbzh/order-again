@@ -1,6 +1,10 @@
 import { promises as fs } from "fs";
 import logger from "utils/logger";
 
+interface Insertable {
+  id: string;
+}
+
 function getDataFilePath(): string {
   return `${process.cwd()}/data/NotesData.json`;
 }
@@ -29,15 +33,18 @@ export async function deleteEntry<T>(id: string): Promise<void> {
   await setData<{ [key: string]: T }>(allData);
 }
 
-export async function insertEntry<T>(data: T): Promise<T> {
+export async function insertEntry<T extends Insertable>(data: T): Promise<T> {
+  if (!data.id) {
+    throw new Error("objects need an id to be persisted");
+  }
+
   const allData = await getData<{ [key: string]: T }>();
-  // TODO: how to handle this case?
   allData[data.id] = data;
   await setData<{ [key: string]: T }>(allData);
   return data;
 }
 
-export async function findEntry<T>(id: string): Promise<T> {
+export async function findEntry<T>(id: string): Promise<T | undefined> {
   const allData = await getData<{ [key: string]: T }>();
   return allData[id];
 }

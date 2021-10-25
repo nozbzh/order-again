@@ -2,7 +2,9 @@ import * as React from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
+
 import { NoteInterface } from "types";
+import { notifyError, notifySuccess, getErrorMessage } from "utils/ui";
 
 interface NoteFormProps {
   note?: NoteInterface;
@@ -25,13 +27,15 @@ const NoteForm = ({ note }: NoteFormProps): JSX.Element => {
       if (isEdit) {
         const url = `/api/notes/${note.id}`;
         await axios.patch(url, noteData);
+        notifySuccess("Saved!");
       } else {
         const url = `/api/notes`;
         await axios.post(url, noteData);
+        notifySuccess("Created!");
       }
       router.push("/");
     } catch (e: any) {
-      throw e;
+      notifyError(`Operation failed: ${getErrorMessage(e)}`);
     }
     setLoading(false);
   };

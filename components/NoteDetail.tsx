@@ -3,6 +3,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import startCase from "lodash/startCase";
 
+import { notifyError, notifySuccess, getErrorMessage } from "utils/ui";
 import { NoteInterface } from "types";
 
 interface NoteDetailProps {
@@ -24,9 +25,10 @@ const NoteDetail = ({
     setLoading(true);
     try {
       await axios.delete(url);
+      notifySuccess("Deleted!");
       router.push("/");
     } catch (e: any) {
-      throw e;
+      notifyError(`Could not delete note: ${getErrorMessage(e)}`);
     }
     setLoading(false);
   };

@@ -5,6 +5,7 @@ import startCase from "lodash/startCase";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
+import { notifyError, notifySuccess, getErrorMessage } from "utils/ui";
 import { NoteInterface } from "types";
 
 interface NoteProps {
@@ -36,21 +37,13 @@ const NotePreview = ({
     setLoading(true);
     try {
       await axios.delete(url);
+      notifySuccess("Deleted!");
       onDelete();
     } catch (e: any) {
-      throw e;
+      notifyError(`Could not delete note: ${getErrorMessage(e)}`);
     }
     setLoading(false);
   };
-
-  // const actions = (
-  //   <div style={{ display: "flex" }}>
-  //     <button onClick={handleEdit}>Edit</button>
-  //     <button onClick={handleDelete} disabled={loading}>
-  //       {loading ? "..." : "Delete"}
-  //     </button>
-  //   </div>
-  // );
 
   return (
     <Link href={`/notes/${id}`}>
