@@ -13,8 +13,8 @@ async function updateNote(req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query;
   const { title, body } = req.body;
 
-  // TODO fix type
-  const note = await Note.update({ id, title, body });
+  // `String(id)` to coerce `string | string[]` to `string`
+  const note = await Note.update({ id: String(id), title, body });
 
   return respondOk(res, note);
 }

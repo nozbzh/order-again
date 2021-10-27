@@ -1,5 +1,6 @@
 import * as React from "react";
 import axios from "axios";
+import get from "lodash/get";
 
 import { notifyError, notifySuccess, getErrorMessage } from "utils/ui";
 import NotePreview from "./NotePreview";
@@ -14,7 +15,7 @@ const NoteList = (): JSX.Element => {
 
     try {
       const response = await axios.get(url);
-      setNotes(response?.data?.payload || []);
+      setNotes(get(response, "data.payload", []));
     } catch (e: any) {
       notifyError(`Could not fetch notes: ${getErrorMessage(e)}`);
     }

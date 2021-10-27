@@ -108,9 +108,8 @@ class Note {
     }
   }
 
-  static async update(note: NoteInterface): Promise<NoteInterface> {
+  static async update(note: Partial<NoteInterface>): Promise<NoteInterface> {
     try {
-      // make sure note exists (will throw if does not exist)
       const existingNote = await this.find(note.id);
 
       const updatedNote = new this({ ...existingNote, ...note });
