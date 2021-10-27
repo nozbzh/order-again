@@ -41,5 +41,3 @@ export default async function handler(
     return respondServerError(res, e);
   }
 }
-
-// curl -d '{"title": "new note", "body": "tango"}' -H 'Content-Type: application/json' http://localhost:3000/api/notes

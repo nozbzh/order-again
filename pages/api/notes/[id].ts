@@ -67,8 +67,3 @@ export default async function handler(
     return respondServerError(res, e);
   }
 }
-
-// curl --request PATCH -d '{"title": "old note", "body": "tangoose"}' -H 'Content-Type: application/json' http://localhost:3000/api/notes/e664525a-64f9-430d-adce-8636ef5efe8c
-// curl -X "DELETE" -H 'Content-Type: application/json' http://localhost:3000/api/notes/9664a173-215e-446a-845b-00c3953d246e
-
-// curl -d '{"title": "booh", "body": "ya"}' -H 'Content-Type: application/json' http://localhost:3000/api/notes
