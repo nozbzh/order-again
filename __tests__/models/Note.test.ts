@@ -3,7 +3,7 @@ import { v4 as uuid } from "uuid";
 import Note from "../../models/Note";
 import * as dataFunctions from "../../data";
 import logger from "../../utils/logger";
-import { InvalidInputError, NotFoundError } from "errors";
+import { NotFoundError } from "errors";
 
 jest.mock("../../data");
 jest.mock("uuid");

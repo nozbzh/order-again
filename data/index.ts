@@ -5,8 +5,13 @@ interface Insertable {
   id: string;
 }
 
-function getDataFilePath(): string {
-  return `${process.cwd()}/data/NotesData.json`;
+export function getDataFilePath(): string {
+  // Quick and dirty way to test while keeping main file clean
+  const path =
+    process.env.NODE_ENV === "test"
+      ? "__tests__/data/TestNotesData.json"
+      : "data/NotesData.json";
+  return `${process.cwd()}/${path}`;
 }
 
 async function getData<T>(): Promise<T> {
@@ -23,8 +28,12 @@ async function setData<T>(data: T): Promise<void> {
   await fs.writeFile(getDataFilePath(), JSON.stringify(data));
 }
 
-export async function getAllEntries<T>() {
+export async function getAllEntries<T>(): Promise<T> {
   return getData<T>();
+}
+
+export async function deleteAll(): Promise<void> {
+  return setData({});
 }
 
 export async function deleteEntry<T>(id: string): Promise<void> {
