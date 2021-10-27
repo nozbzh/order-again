@@ -7,16 +7,21 @@ import Link from "next/link";
 
 import { notifyError, notifySuccess, getErrorMessage } from "utils/ui";
 import { NoteInterface } from "types";
+import { Button, Flex, SubTitle } from "./StyledComponents";
 
 interface NoteProps {
   note: NoteInterface;
   onDelete: () => void;
 }
 
+const Wrapper = styled.div`
+  cursor: pointer;
+`;
+
 const Truncate = styled.p`
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 `;
 
 const NotePreview = ({
@@ -46,17 +51,17 @@ const NotePreview = ({
   };
 
   return (
-    <Link href={`/notes/${id}`}>
-      <div>
-        <h3>{startCase(title)}</h3>
+    <Link href={`/notes/${id}`} passHref>
+      <Wrapper>
+        <SubTitle>{startCase(title)}</SubTitle>
         <Truncate>{body}</Truncate>
-        <div style={{ display: "flex" }}>
-          <button onClick={handleEdit}>Edit</button>
-          <button onClick={handleDelete} disabled={loading}>
+        <Flex style={{ display: "flex" }}>
+          <Button onClick={handleEdit}>Edit</Button>
+          <Button onClick={handleDelete} disabled={loading}>
             {loading ? "..." : "Delete"}
-          </button>
-        </div>
-      </div>
+          </Button>
+        </Flex>
+      </Wrapper>
     </Link>
   );
 };

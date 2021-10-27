@@ -1,10 +1,13 @@
-// TODO: remove types or use them
-class Response<T> {
-  isSuccess: boolean;
-  error: T | undefined;
-  private payload: T | undefined;
+interface ErrorResponse {
+  message: string;
+}
 
-  constructor(isSuccess: boolean, error?: T, value?: T) {
+class Response {
+  isSuccess: boolean;
+  error: ErrorResponse | undefined;
+  payload: any;
+
+  constructor(isSuccess: boolean, error?: ErrorResponse, value?: any) {
     if (isSuccess && error) {
       throw new Error(
         "InvalidOperation: Cannot have both success and error at the same time"
@@ -21,12 +24,12 @@ class Response<T> {
     Object.freeze(this);
   }
 
-  static ok<U>(value?: U): Response<U> {
-    return new Response<U>(true, undefined, value);
+  static ok(value?: any): Response {
+    return new this(true, undefined, value);
   }
 
-  static fail<U>(error: U): Response<U> {
-    return new Response<U>(false, error);
+  static fail(error: ErrorResponse): Response {
+    return new this(false, error);
   }
 }
 

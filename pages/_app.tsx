@@ -2,6 +2,9 @@ import * as React from "react";
 import styled from "styled-components";
 import { Toaster } from "react-hot-toast";
 import Link from "next/link";
+import { AppProps } from "next/app";
+
+import { Heading } from "components/StyledComponents";
 
 import "styles/global.css";
 
@@ -10,24 +13,21 @@ const Layout = styled.div`
   height: 100%;
 `;
 
-const Title = styled.h1`
-  cursor: pointer;
+const Title = styled(Heading)`
+  cursor: pointer !important;
+  font-size: 3em;
+  margin-top: 10px;
 `;
 
 const TopBar = () => {
   return (
-    <Link href="/">
-      <Title>NoNotes</Title>
+    <Link href="/" passHref>
+      <Title>GlassNotes</Title>
     </Link>
   );
 };
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
-
-// TODO: type props
-const NotesApp = ({ Component, pageProps }) => {
+const NotesApp = ({ Component, pageProps }: AppProps) => {
   return (
     <Layout>
       <TopBar />

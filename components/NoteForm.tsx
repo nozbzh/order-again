@@ -43,16 +43,18 @@ const NoteForm = ({ note }: NoteFormProps): JSX.Element => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <input
+        data-testid="title-field"
         defaultValue={isEdit ? note.title : ""}
         {...register("title", { required: true })}
       />
       {errors.title && <span>This field is required</span>}
 
       <textarea
+        data-testid="body-field"
         defaultValue={isEdit ? note.body : ""}
         {...register("body", { required: true })}
       />
-      {/* errors will return when field validation fails  */}
+
       {errors.body && <span>This field is required</span>}
 
       <input type="submit" value={loading ? "..." : "Submit"} />

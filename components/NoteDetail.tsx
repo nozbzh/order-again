@@ -5,6 +5,7 @@ import startCase from "lodash/startCase";
 
 import { notifyError, notifySuccess, getErrorMessage } from "utils/ui";
 import { NoteInterface } from "types";
+import { Button, SubTitle, Flex, Body, Heading } from "./StyledComponents";
 
 interface NoteDetailProps {
   note: NoteInterface;
@@ -34,17 +35,19 @@ const NoteDetail = ({
   };
 
   return (
-    <div>
-      <h1>{startCase(title)}</h1>
-      <h4>{`Last updated at: ${new Date(lastUpdatedAt).toLocaleString()}`}</h4>
-      <p>{body}</p>
-      <div style={{ display: "flex" }}>
-        <button onClick={handleEdit}>Edit</button>
-        <button onClick={handleDelete} disabled={loading}>
+    <>
+      <Heading>{startCase(title)}</Heading>
+      <SubTitle>{`Last updated at: ${new Date(
+        lastUpdatedAt
+      ).toLocaleString()}`}</SubTitle>
+      <Body>{body}</Body>
+      <Flex style={{ display: "flex" }}>
+        <Button onClick={handleEdit}>Edit</Button>
+        <Button onClick={handleDelete} disabled={loading}>
           {loading ? "..." : "Delete"}
-        </button>
-      </div>
-    </div>
+        </Button>
+      </Flex>
+    </>
   );
 };
 

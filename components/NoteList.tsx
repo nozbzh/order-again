@@ -2,7 +2,7 @@ import * as React from "react";
 import axios from "axios";
 import get from "lodash/get";
 
-import { notifyError, notifySuccess, getErrorMessage } from "utils/ui";
+import { notifyError, getErrorMessage } from "utils/ui";
 import NotePreview from "./NotePreview";
 
 const NoteList = (): JSX.Element => {
@@ -32,13 +32,13 @@ const NoteList = (): JSX.Element => {
       {loading ? (
         "loading..."
       ) : (
-        <div>
+        <>
           {notes.length
             ? notes.map(note => (
                 <NotePreview onDelete={fetchNotes} key={note.id} note={note} />
               ))
-            : "no notes yet"}
-        </div>
+            : "No notes yet"}
+        </>
       )}
     </>
   );
