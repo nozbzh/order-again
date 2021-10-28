@@ -25,6 +25,9 @@ const Title = styled(Heading)`
   cursor: pointer !important;
   font-size: 3em;
   margin-top: 10px;
+  padding-bottom: 1rem;
+  padding-left: 10px;
+  box-shadow: lightgrey 0 1px 0 0;
 `;
 
 const TopBar = () => {
