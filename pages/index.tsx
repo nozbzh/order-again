@@ -20,9 +20,9 @@ export default function Home() {
       <InnerContainer>
         <Heading>My Notes</Heading>
         <Link href="/notes/create" passHref>
-          <CreateButton data-testid="create-note-button">
+          <Button height="3em" data-testid="create-note-button">
             Create New Note
-          </CreateButton>
+          </Button>
         </Link>
       </InnerContainer>
       <NoteList />

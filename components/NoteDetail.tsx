@@ -42,7 +42,7 @@ const NoteDetail = ({
       ).toLocaleString()}`}</SubTitle>
       <Flex style={{ display: "flex" }}>
         <Button onClick={handleEdit}>Edit</Button>
-        <Button onClick={handleDelete} disabled={loading}>
+        <Button onClick={handleDelete} danger={true} disabled={loading}>
           {loading ? "..." : "Delete"}
         </Button>
       </Flex>

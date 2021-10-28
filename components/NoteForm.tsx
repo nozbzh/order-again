@@ -2,13 +2,24 @@ import * as React from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
+import styled from "styled-components";
 
 import { NoteInterface } from "types";
 import { notifyError, notifySuccess, getErrorMessage } from "utils/ui";
+import { Flex, Button } from "components/StyledComponents";
 
 interface NoteFormProps {
   note?: NoteInterface;
 }
+
+const BodyInput = styled.textarea`
+  min-height: 200px;
+  margin-bottom: 1em;
+`;
+
+const ErrorMessage = styled.span`
+  color: red;
+`;
 
 const NoteForm = ({ note }: NoteFormProps): JSX.Element => {
   const {
@@ -42,22 +53,29 @@ const NoteForm = ({ note }: NoteFormProps): JSX.Element => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <input
-        data-testid="title-field"
-        defaultValue={isEdit ? note.title : ""}
-        {...register("title", { required: true })}
-      />
-      {errors.title && <span>This field is required</span>}
+      <Flex style={{ flexDirection: "column" }}>
+        <label htmlFor="title">Title</label>
+        <input
+          data-testid="title-field"
+          defaultValue={isEdit ? note.title : ""}
+          {...register("title", { required: true })}
+        />
+        {errors.title && <ErrorMessage>This field is required</ErrorMessage>}
 
-      <textarea
-        data-testid="body-field"
-        defaultValue={isEdit ? note.body : ""}
-        {...register("body", { required: true })}
-      />
+        <label htmlFor="body">Body</label>
+        <BodyInput
+          data-testid="body-field"
+          defaultValue={isEdit ? note.body : ""}
+          {...register("body", { required: true })}
+        />
 
-      {errors.body && <span>This field is required</span>}
-
-      <input type="submit" value={loading ? "..." : "Submit"} />
+        {errors.body && <ErrorMessage>This field is required</ErrorMessage>}
+        <Flex style={{ alignItems: "flex-end", flexDirection: "column" }}>
+          <Button style={{ maxWidth: "10em" }} onClick={handleSubmit(onSubmit)}>
+            {loading ? "..." : "Submit"}
+          </Button>
+        </Flex>
+      </Flex>
     </form>
   );
 };

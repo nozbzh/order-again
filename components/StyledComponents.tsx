@@ -2,6 +2,14 @@ import styled from "styled-components";
 
 export const Button = styled.button`
   cursor: pointer;
+  border-width: 1px;
+  border-style: solid;
+  color: white;
+  height: ${props => props.height || "auto"};
+  border-color: ${props => (props.danger ? "crimson" : "cornflowerblue")};
+  background-color: ${props => (props.danger ? "crimson" : "cornflowerblue")};
+  padding: 0.5rem 1rem;
+  margin: 0 0.1em;
 `;
 
 export const Flex = styled.div`
