@@ -6,7 +6,7 @@ interface Insertable {
 }
 
 export function getDataFilePath(): string {
-  // Quick and dirty way to test while keeping main file clean
+  // Quick and dirty way to test while keeping main data file clean
   const path =
     process.env.NODE_ENV === "test"
       ? "__tests__/data/TestNotesData.json"

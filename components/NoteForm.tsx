@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
@@ -60,7 +60,7 @@ const NoteForm = ({ note }: NoteFormProps): JSX.Element => {
           defaultValue={isEdit ? note.title : ""}
           {...register("title", { required: true })}
         />
-        {errors.title && <ErrorMessage>This field is required</ErrorMessage>}
+        {errors.title && <ErrorMessage>Title is required</ErrorMessage>}
 
         <label htmlFor="body">Body</label>
         <BodyInput
@@ -68,8 +68,8 @@ const NoteForm = ({ note }: NoteFormProps): JSX.Element => {
           defaultValue={isEdit ? note.body : ""}
           {...register("body", { required: true })}
         />
+        {errors.body && <ErrorMessage>Body is required</ErrorMessage>}
 
-        {errors.body && <ErrorMessage>This field is required</ErrorMessage>}
         <Flex style={{ alignItems: "flex-end", flexDirection: "column" }}>
           <Button style={{ maxWidth: "10em" }} onClick={handleSubmit(onSubmit)}>
             {loading ? "..." : "Submit"}

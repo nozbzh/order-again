@@ -9,6 +9,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 import Create from "pages/notes/create";
+import { DEFAULT_ERROR_MESSAGE } from "utils/ui";
 
 jest.mock("react-hot-toast");
 jest.mock("axios");
@@ -67,7 +68,7 @@ describe("Create page", () => {
 
       await waitFor(() =>
         expect(toast.error).toHaveBeenCalledWith(
-          "Operation failed: if this persists please notify the GlassNotes team"
+          `Operation failed: ${DEFAULT_ERROR_MESSAGE}`
         )
       );
     });

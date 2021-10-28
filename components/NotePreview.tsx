@@ -59,7 +59,7 @@ const NotePreview = ({
       <Wrapper>
         <SubTitle>{startCase(title)}</SubTitle>
         <Truncate>{body}</Truncate>
-        <Flex style={{ display: "flex" }}>
+        <Flex>
           <Button onClick={handleEdit}>Edit</Button>
           <Button onClick={handleDelete} danger={true} disabled={loading}>
             {loading ? "..." : "Delete"}

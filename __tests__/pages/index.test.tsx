@@ -13,6 +13,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 import Home from "../../pages/index";
+import { DEFAULT_ERROR_MESSAGE } from "utils/ui";
 
 jest.mock("react-hot-toast");
 jest.mock("axios");
@@ -73,7 +74,7 @@ describe("Home page", () => {
 
       await waitFor(() =>
         expect(toast.error).toHaveBeenCalledWith(
-          "Could not fetch notes: if this persists please notify the GlassNotes team"
+          `Could not fetch notes: ${DEFAULT_ERROR_MESSAGE}`
         )
       );
     });

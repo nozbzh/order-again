@@ -9,6 +9,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 import DetailsPage from "pages/notes/[id]";
+import { DEFAULT_ERROR_MESSAGE } from "utils/ui";
 
 const mockRouter = { push: jest.fn() };
 jest.mock("next/router", () => ({
@@ -75,7 +76,7 @@ describe("Details page", () => {
 
         await waitFor(() =>
           expect(toast.error).toHaveBeenCalledWith(
-            "Could not delete note: if this persists please notify the GlassNotes team"
+            `Could not delete note: ${DEFAULT_ERROR_MESSAGE}`
           )
         );
       });

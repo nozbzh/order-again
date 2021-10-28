@@ -40,7 +40,7 @@ const NoteDetail = ({
       <SubTitle>{`Last updated at: ${new Date(
         lastUpdatedAt
       ).toLocaleString()}`}</SubTitle>
-      <Flex style={{ display: "flex" }}>
+      <Flex>
         <Button onClick={handleEdit}>Edit</Button>
         <Button onClick={handleDelete} danger={true} disabled={loading}>
           {loading ? "..." : "Delete"}
