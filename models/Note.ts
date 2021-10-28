@@ -35,6 +35,14 @@ class Note {
       throw new InvalidInputError("Body is required");
     }
 
+    if (title.length > 150) {
+      throw new InvalidInputError("Title max length is 150 characters");
+    }
+
+    if (body.length > 5000) {
+      throw new InvalidInputError("Body max length is 5000 characters");
+    }
+
     if (!id) {
       this.id = uuid();
     } else {

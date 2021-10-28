@@ -1,4 +1,4 @@
-export default class InvalidAttributeError extends Error {
+export default class InvalidInputError extends Error {
   constructor(message: string) {
     super(message);
     this.name = this.constructor.name;

@@ -29,6 +29,8 @@ const err = new Error("not again!");
 const title = "hi";
 const body = "world";
 
+const longString = body.repeat(2000);
+
 const mockNote = {
   title,
   body,
@@ -58,6 +60,18 @@ describe("Note", () => {
           // @ts-ignore
           new Note({ title });
         }).toThrow("Body is required");
+      });
+
+      it("throws a InvalidInputError when title is too long", () => {
+        expect(() => {
+          new Note({ title: longString, body });
+        }).toThrow("Title max length is 150 characters");
+      });
+
+      it("throws a InvalidInputError when body is too long", () => {
+        expect(() => {
+          new Note({ title, body: longString });
+        }).toThrow("Body max length is 5000 characters");
       });
     });
     it("generates an id if it is missing", () => {
