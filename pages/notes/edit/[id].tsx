@@ -1,7 +1,6 @@
 import * as React from "react";
 
 import NoteForm from "components/NoteForm";
-import { AppContainer } from "components/StyledComponents";
 import logger from "utils/logger";
 import Note from "models/Note";
 import { NoteInterface } from "types";
@@ -29,11 +28,7 @@ export async function getServerSideProps(context) {
 }
 
 const EditNote = ({ note }: EditNoteProps): JSX.Element => {
-  return (
-    <AppContainer>
-      <NoteForm note={note} />
-    </AppContainer>
-  );
+  return <NoteForm note={note} />;
 };
 
 export default EditNote;

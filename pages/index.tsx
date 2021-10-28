@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Link from "next/link";
 
 import NoteList from "components/NoteList";
-import { Heading, Button, AppContainer } from "components/StyledComponents";
+import { Heading, Button } from "components/StyledComponents";
 
 const InnerContainer = styled.div`
   display: flex;
@@ -16,7 +16,7 @@ const CreateButton = styled(Button)`
 
 export default function Home() {
   return (
-    <AppContainer>
+    <>
       <InnerContainer>
         <Heading>My Notes</Heading>
         <Link href="/notes/create" passHref>
@@ -26,6 +26,6 @@ export default function Home() {
         </Link>
       </InnerContainer>
       <NoteList />
-    </AppContainer>
+    </>
   );
 }

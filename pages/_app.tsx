@@ -8,6 +8,14 @@ import { Heading } from "components/StyledComponents";
 
 import "styles/global.css";
 
+const AppContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 2em auto;
+  max-width: 800px;
+`;
+
 const Layout = styled.div`
   width: 100%;
   height: 100%;
@@ -31,7 +39,9 @@ const NotesApp = ({ Component, pageProps }: AppProps) => {
   return (
     <Layout>
       <TopBar />
-      <Component {...pageProps} />
+      <AppContainer>
+        <Component {...pageProps} />
+      </AppContainer>
       <Toaster />
     </Layout>
   );
