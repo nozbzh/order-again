@@ -2,6 +2,7 @@ import React from "react";
 
 import Note from "models/Note";
 import NoteDetail from "components/NoteDetail";
+import { AppContainer } from "components/StyledComponents";
 
 import { NoteInterface } from "types";
 import logger from "utils/logger";
@@ -29,7 +30,11 @@ export async function getServerSideProps(context) {
 }
 
 const NotePage = ({ note }: NotePageProps): JSX.Element => {
-  return <NoteDetail note={note} />;
+  return (
+    <AppContainer>
+      <NoteDetail note={note} />
+    </AppContainer>
+  );
 };
 
 export default NotePage;

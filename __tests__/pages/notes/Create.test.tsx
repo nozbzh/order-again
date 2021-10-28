@@ -8,7 +8,7 @@ import user from "@testing-library/user-event";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-import Create from "pages/notes/Create";
+import Create from "pages/notes/create";
 
 jest.mock("react-hot-toast");
 jest.mock("axios");

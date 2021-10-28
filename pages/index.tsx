@@ -3,33 +3,29 @@ import styled from "styled-components";
 import Link from "next/link";
 
 import NoteList from "components/NoteList";
-import { Heading, Button } from "components/StyledComponents";
-
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  margin: 2em auto;
-  max-width: 800px;
-`;
+import { Heading, Button, AppContainer } from "components/StyledComponents";
 
 const InnerContainer = styled.div`
   display: flex;
   justify-content: space-between;
 `;
 
+const CreateButton = styled(Button)`
+  height: 3em;
+`;
+
 export default function Home() {
   return (
-    <Container>
+    <AppContainer>
       <InnerContainer>
         <Heading>My Notes</Heading>
         <Link href="/notes/create" passHref>
-          <Button data-testid="create-note-button">Create New Note</Button>
+          <CreateButton data-testid="create-note-button">
+            Create New Note
+          </CreateButton>
         </Link>
       </InnerContainer>
-      <InnerContainer>
-        <NoteList />
-      </InnerContainer>
-    </Container>
+      <NoteList />
+    </AppContainer>
   );
 }

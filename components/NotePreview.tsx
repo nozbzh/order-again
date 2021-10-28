@@ -16,12 +16,16 @@ interface NoteProps {
 
 const Wrapper = styled.div`
   cursor: pointer;
+  border: 1px solid #ccc;
+  padding: 1em;
+  margin: 1em 0;
+  box-shadow: 0 0px 5px rgb(0 0 0 / 20%);
 `;
 
 const Truncate = styled.p`
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const NotePreview = ({
