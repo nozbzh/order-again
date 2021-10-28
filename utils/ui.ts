@@ -3,7 +3,7 @@ import get from "lodash/get";
 import axios, { AxiosError } from "axios";
 
 export const DEFAULT_ERROR_MESSAGE =
-  "if this persists please notify the GlassNotes team";
+  "if this persists please notify the SimpleNotes team";
 
 export function getErrorMessage(err: AxiosError | Error) {
   let message;

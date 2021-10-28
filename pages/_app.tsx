@@ -33,7 +33,7 @@ const Title = styled(Heading)`
 const TopBar = () => {
   return (
     <Link href="/" passHref>
-      <Title>GlassNotes</Title>
+      <Title>SimpleNotes</Title>
     </Link>
   );
 };
