@@ -9,6 +9,7 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
+    "@prisma/client": "^3.6.0",
     "axios": "^0.22.0",
     "lodash": "^4.17.21",
     "next": "latest",
@@ -30,6 +31,7 @@
     "eslint-plugin-testing-library": "4.11.0",
     "identity-obj-proxy": "3.0.0",
     "jest": "27.0.6",
+    "prisma": "3.6.0",
     "react-test-renderer": "17.0.2",
     "typescript": "^4.4.3"
   }

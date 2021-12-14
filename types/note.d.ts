@@ -1,8 +1,8 @@
 export interface NoteInterface {
   title: string;
   body: string;
-  id: string;
-  lastUpdatedAt: number;
+  id: number;
+  lastUpdatedAt: Date;
 }
 
 export interface NoteInput {

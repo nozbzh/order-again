@@ -1,4 +1,5 @@
 import { promises as fs } from "fs";
+import prisma from "lib/prisma";
 import logger from "utils/logger";
 
 interface Insertable {
@@ -28,8 +29,9 @@ async function setData<T>(data: T): Promise<void> {
   await fs.writeFile(getDataFilePath(), JSON.stringify(data));
 }
 
-export async function getAllEntries<T>(): Promise<T> {
-  return getData<T>();
+export async function getAllEntries<T>(): Promise<T[]> {
+  // @ts-ignore
+  return await prisma.note.findMany();
 }
 
 export async function deleteAll(): Promise<void> {
@@ -43,14 +45,18 @@ export async function deleteEntry<T>(id: string): Promise<void> {
 }
 
 export async function insertEntry<T extends Insertable>(data: T): Promise<T> {
-  if (!data.id) {
-    throw new Error("objects need an id to be persisted");
-  }
+  // if (!data.id) {
+  //   throw new Error("objects need an id to be persisted");
+  // }
 
-  const allData = await getData<{ [key: string]: T }>();
-  allData[data.id] = data;
-  await setData<{ [key: string]: T }>(allData);
-  return data;
+  // const allData = await getData<{ [key: string]: T }>();
+  // allData[data.id] = data;
+  // await setData<{ [key: string]: T }>(allData);
+
+  // @ts-ignore
+  const entity = await prisma.note.create({ data: data });
+  // @ts-ignore
+  return entity;
 }
 
 export async function findEntry<T>(id: string): Promise<T | undefined> {
