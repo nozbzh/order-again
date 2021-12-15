@@ -10,10 +10,6 @@ const InnerContainer = styled.div`
   justify-content: space-between;
 `;
 
-const CreateButton = styled(Button)`
-  height: 3em;
-`;
-
 export default function Home() {
   return (
     <>
