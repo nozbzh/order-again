@@ -1,13 +1,12 @@
 import prisma from "lib/prisma";
 import { InvalidInputError, NotFoundError } from "errors";
 import logger from "utils/logger";
+import { NOT_FOUND_CODE } from "helpers/constants";
 import {
   EstablishmentInterface,
   EstablishmentInternalData,
   ItemInterface,
 } from "types";
-
-const NOT_FOUND_CODE = "P2025";
 
 // TODO: error handling and Types/Interfaces
 

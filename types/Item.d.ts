@@ -4,6 +4,13 @@ import { EstablishmentInterface } from "./Establishment";
 export interface ItemInterface {
   id: string;
   name: string;
-  establishment: EstablishmentInterface;
+  // establishment: EstablishmentInterface;
+  establishmentId: string;
   ratings: RatingInterface[];
+}
+
+export interface ItemInternalData {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

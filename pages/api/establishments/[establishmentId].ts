@@ -10,12 +10,12 @@ import {
 import Establishment from "models/Establishment";
 
 async function updateEstablishment(req: NextApiRequest, res: NextApiResponse) {
-  const { id } = req.query;
+  const { establishmentId } = req.query;
   const { name, address } = req.body;
 
-  // `String(id)` to coerce `string | string[]` to `string`
+  // `String(establishmentId)` to coerce `string | string[]` to `string`
   const establishment = await Establishment.update({
-    id,
+    id: String(establishmentId),
     name,
     address,
   });
@@ -24,15 +24,15 @@ async function updateEstablishment(req: NextApiRequest, res: NextApiResponse) {
 }
 
 async function findEstablishment(req: NextApiRequest, res: NextApiResponse) {
-  const { id } = req.query;
-  const establishment = await Establishment.find(String(id));
+  const { establishmentId } = req.query;
+  const establishment = await Establishment.find(String(establishmentId));
 
   return respondOk(res, establishment);
 }
 
 async function deleteEstablishment(req: NextApiRequest, res: NextApiResponse) {
-  const { id } = req.query;
-  const deleted = await Establishment.delete(String(id));
+  const { establishmentId } = req.query;
+  const deleted = await Establishment.delete(String(establishmentId));
 
   if (!deleted) {
     return respondServerError(res, new Error("could not delete establishment"));
