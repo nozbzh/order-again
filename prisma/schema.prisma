@@ -7,9 +7,44 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Note {
-  id             Int     @default(autoincrement()) @id
-  title          String
-  body           String
-  lastUpdatedAt  DateTime  @default(now())
+model User {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  email     String   @unique
+  name      String
+  ratings   Rating[]
+}
+
+model Establishment {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  name      String
+  address   String
+  latitude  String?
+  longitude String?
+  Items     Item[]
+}
+
+model Item {
+  id              String        @id @default(uuid())
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @default(now())
+  name            String
+  establishmentId String
+  establishment   Establishment @relation(fields: [establishmentId], references: [id])
+  ratings         Rating[]
+}
+
+model Rating {
+  id              String         @id @default(uuid())
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @default(now())
+  value           String
+  note            String         @db.VarChar(1000)
+  itemId          String
+  item            Item           @relation(fields: [itemId], references: [id])
+  userId          String
+  user            User           @relation(fields: [userId], references: [id])
 }
