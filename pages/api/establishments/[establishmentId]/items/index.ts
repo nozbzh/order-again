@@ -6,7 +6,9 @@ import {
   respondServerError,
   respondUnprocessableEntity,
   respondCreated,
+  respondUnauthorized,
 } from "helpers/Responses";
+import { getUserIdFromJWT } from "helpers/jwt";
 
 async function createItem(req: NextApiRequest, res: NextApiResponse) {
   const { establishmentId } = req.query;
@@ -22,6 +24,10 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
+    const userId = await getUserIdFromJWT(req);
+    if (!userId) {
+      return respondUnauthorized(res);
+    }
     const { method } = req;
     const { establishmentId } = req.query;
 

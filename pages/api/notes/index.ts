@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getToken } from "next-auth/jwt";
 
 import Note from "models/Note";
 import {
@@ -7,7 +6,9 @@ import {
   respondServerError,
   respondUnprocessableEntity,
   respondCreated,
+  respondUnauthorized,
 } from "helpers/Responses";
+import { getUserIdFromJWT } from "helpers/jwt";
 
 async function createNote(req: NextApiRequest, res: NextApiResponse) {
   const { title, body } = req.body;
@@ -23,14 +24,9 @@ export default async function handler(
 ) {
   try {
     const { method } = req;
-
-    const secret = process.env.JWT_SECRET;
-    const token = await getToken({ req, secret });
-
-    if (token) {
-      console.log("JSON Web Token", JSON.stringify(token, null, 2));
-    } else {
-      console.log("No token");
+    const userId = await getUserIdFromJWT(req);
+    if (!userId) {
+      return respondUnauthorized(res);
     }
 
     switch (method) {

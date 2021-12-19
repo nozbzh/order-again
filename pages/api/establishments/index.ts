@@ -6,7 +6,9 @@ import {
   respondServerError,
   respondUnprocessableEntity,
   respondCreated,
+  respondUnauthorized,
 } from "helpers/Responses";
+import { getUserIdFromJWT } from "helpers/jwt";
 
 async function createEstablishment(req: NextApiRequest, res: NextApiResponse) {
   const { name, address } = req.body;
@@ -21,6 +23,11 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
+    const userId = await getUserIdFromJWT(req);
+    if (!userId) {
+      return respondUnauthorized(res);
+    }
+
     const { method } = req;
 
     switch (method) {

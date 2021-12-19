@@ -6,7 +6,9 @@ import {
   respondServerError,
   respondUnprocessableEntity,
   respondCreated,
+  respondUnauthorized,
 } from "helpers/Responses";
+import { getUserIdFromJWT } from "helpers/jwt";
 
 async function createRating(req: NextApiRequest, res: NextApiResponse) {
   const { itemId } = req.query;
@@ -25,6 +27,11 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
+    const userId = await getUserIdFromJWT(req);
+    if (!userId) {
+      return respondUnauthorized(res);
+    }
+
     const { method } = req;
     const { itemId } = req.query;
 

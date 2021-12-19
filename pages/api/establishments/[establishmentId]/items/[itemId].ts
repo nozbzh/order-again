@@ -5,7 +5,9 @@ import {
   respondUnprocessableEntity,
   respondNotFound,
   respondOk,
+  respondUnauthorized,
 } from "helpers/Responses";
+import { getUserIdFromJWT } from "helpers/jwt";
 
 import Item from "models/Item";
 
@@ -45,6 +47,11 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
+    const userId = await getUserIdFromJWT(req);
+    if (!userId) {
+      return respondUnauthorized(res);
+    }
+
     const { method } = req;
 
     switch (method) {

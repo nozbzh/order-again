@@ -26,3 +26,7 @@ export function respondOk(resp: NextApiResponse, responseBody: any) {
 export function respondCreated(resp: NextApiResponse, responseBody: any) {
   return resp.status(201).json(Response.ok(responseBody));
 }
+
+export function respondUnauthorized(resp: NextApiResponse) {
+  return resp.status(401).json(Response.fail({ message: "unauthorized" }));
+}
