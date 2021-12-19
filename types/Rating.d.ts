@@ -5,6 +5,12 @@ export interface RatingInterface {
   id: string;
   value: string;
   note: string;
-  item: ItemInterface;
-  user: UserInterface;
+  itemId: string;
+  userId: string;
+}
+
+export interface RatingInternalData {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
