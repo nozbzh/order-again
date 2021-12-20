@@ -7,6 +7,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum EstablishmentType {
+  RESTAURANT
+  GROCERY_STORE
+}
+
 model User {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
@@ -14,6 +19,8 @@ model User {
   email     String   @unique
   name      String
   ratings   Rating[]
+
+  @@index([email])
 }
 
 model Establishment {
@@ -21,10 +28,14 @@ model Establishment {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
   name      String
+  type      EstablishmentType @default(RESTAURANT)
   address   String
   latitude  String?
   longitude String?
   Items     Item[]
+
+  @@index([name])
+  @@unique([name, address], name: "establishmentIdentifier")
 }
 
 model Item {

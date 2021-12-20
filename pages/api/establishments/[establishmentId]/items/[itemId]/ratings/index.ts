@@ -14,8 +14,7 @@ async function createRating(req: NextApiRequest, res: NextApiResponse) {
   const { itemId } = req.query;
   const { value, note } = req.body;
 
-  // const userId = getUserIdFromSession()
-  const userId = "a0acdf4b-0f85-41fc-b7ae-f3ce9595452f";
+  const userId = await getUserIdFromJWT(req);
 
   const rating = await Rating.create({ userId, itemId, value, note });
 

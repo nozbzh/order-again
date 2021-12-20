@@ -19,12 +19,19 @@ import {
 //   lastUpdatedAt?: Date;
 // }
 
+// will be needed for context-aware typeahead search
+enum EstablishmentType {
+  RESTAURANT,
+  GROCERY_STORE,
+}
+
 class Establishment {
   id: string;
   name: string;
   address: string;
   // latitude: string;
   // longitude: string;
+  // type: EstablishmentType;
   items: ItemInterface[];
 
   constructor(
@@ -117,6 +124,21 @@ class Establishment {
       logger.error(e);
       throw e;
     }
+  }
+
+  static async findByNameAndType(q: string, type?: EstablishmentType) {
+    return await prisma.establishment.findMany({
+      where: {
+        name: {
+          contains: q,
+          mode: "insensitive",
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+      },
+    });
   }
 
   static async update(
