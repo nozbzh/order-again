@@ -137,6 +137,7 @@ class Establishment {
       select: {
         id: true,
         name: true,
+        address: true,
       },
     });
   }
