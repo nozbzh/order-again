@@ -62,6 +62,24 @@ class Rating {
     }
   }
 
+  static async findByUserAndItem(userId: string, itemId: string): Promise<any> {
+    try {
+      const rating = await prisma.rating.findFirst({
+        where: { itemId, userId },
+        select: { id: true, value: true, note: true },
+      });
+
+      if (!rating) {
+        throw new NotFoundError("rating");
+      }
+
+      return rating;
+    } catch (e: any) {
+      logger.error(e);
+      throw e;
+    }
+  }
+
   static async all(itemId: string): Promise<any[]> {
     try {
       return await prisma.rating.findMany({ where: { itemId } });

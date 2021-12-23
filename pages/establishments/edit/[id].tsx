@@ -1,0 +1,36 @@
+import * as React from "react";
+
+import EstablishmentForm from "components/establishment/EstablishmentForm";
+import logger from "utils/logger";
+import Establishment from "models/Establishment";
+import { EstablishmentInterface } from "types";
+
+interface EditEstablishmentProps {
+  establishment: EstablishmentInterface;
+}
+
+export async function getServerSideProps(context) {
+  const {
+    params: { id },
+  } = context;
+
+  let establishment = {};
+
+  try {
+    establishment = await Establishment.find(id);
+  } catch (e: any) {
+    logger.error(e);
+  }
+
+  return {
+    props: { establishment },
+  };
+}
+
+const EditEstablishment = ({
+  establishment,
+}: EditEstablishmentProps): JSX.Element => {
+  return <EstablishmentForm establishment={establishment} />;
+};
+
+export default EditEstablishment;

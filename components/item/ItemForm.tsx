@@ -4,44 +4,47 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
-import { EstablishmentInterface } from "types";
+import { ItemInterface } from "types";
 import { notifyError, notifySuccess, getErrorMessage } from "utils/ui";
 import { Flex, Button } from "components/StyledComponents";
 
-interface EstablishmentFormProps {
-  establishment?: EstablishmentInterface;
+interface ItemFormProps {
+  item?: ItemInterface;
+  establishmentId: string;
+  onSuccess: () => void;
 }
 
 const ErrorMessage = styled.span`
   color: red;
 `;
 
-const EstablishmentForm = ({
-  establishment,
-}: EstablishmentFormProps): JSX.Element => {
+const ItemForm = ({
+  item,
+  establishmentId,
+  onSuccess,
+}: ItemFormProps): JSX.Element => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const router = useRouter();
   const [loading, setLoading] = React.useState(false);
 
-  const isEdit = Boolean(establishment);
+  const isEdit = Boolean(item);
 
-  const onSubmit = async (establishmentData: EstablishmentInterface) => {
+  const onSubmit = async (itemData: ItemInterface) => {
     setLoading(true);
     try {
       if (isEdit) {
-        const url = `/api/establishments/${establishment.id}`;
-        await axios.patch(url, establishmentData);
+        const url = `/api/establishments/${establishmentId}/items/${item.id}`;
+        await axios.patch(url, itemData);
         notifySuccess("Saved!");
       } else {
-        const url = `/api/establishments`;
-        await axios.post(url, establishmentData);
+        const url = `/api/establishments/${establishmentId}/items`;
+        await axios.post(url, itemData);
         notifySuccess("Created!");
       }
-      router.push("/");
+      onSuccess();
     } catch (e: any) {
       notifyError(`Operation failed: ${getErrorMessage(e)}`);
     }
@@ -54,19 +57,10 @@ const EstablishmentForm = ({
         <label htmlFor="name">Name</label>
         <input
           data-testid="name-field"
-          defaultValue={isEdit ? establishment.name : ""}
+          defaultValue={isEdit ? item.name : ""}
           {...register("name", { required: true })}
         />
         {errors.name && <ErrorMessage>Name is required</ErrorMessage>}
-
-        <label htmlFor="address">Address</label>
-        <input
-          data-testid="address-field"
-          defaultValue={isEdit ? establishment.address : ""}
-          {...register("address", { required: true })}
-        />
-        {errors.address && <ErrorMessage>Address is required</ErrorMessage>}
-
         <Flex style={{ alignItems: "flex-end", flexDirection: "column" }}>
           <Button
             disabled={loading}
@@ -81,4 +75,4 @@ const EstablishmentForm = ({
   );
 };
 
-export default EstablishmentForm;
+export default ItemForm;

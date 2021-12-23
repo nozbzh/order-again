@@ -67,9 +67,39 @@ class Item {
     }
   }
 
-  static async all(establishmentId: string): Promise<any[]> {
+  static async allByEstablishmentWithUserRatings(
+    establishmentId: string,
+    userId: string
+  ): Promise<any[]> {
     try {
-      return await prisma.item.findMany({ where: { establishmentId } });
+      return await prisma.item.findMany({
+        where: { establishmentId, ratings: { every: { userId } } },
+        select: {
+          id: true,
+          name: true,
+          ratings: {
+            select: {
+              id: true,
+              value: true,
+              note: true,
+            },
+          },
+        },
+      });
+      // return await prisma.item.findMany({
+      //   where: { establishmentId },
+      //   select: {
+      //     id: true,
+      //     name: true,
+      //     ratings: {
+      //       select: {
+      //         id: true,
+      //         value: true,
+      //         note: true,
+      //       },
+      //     },
+      //   },
+      // });
     } catch (e: any) {
       logger.error(e);
       throw e;

@@ -58,4 +58,6 @@ model Rating {
   item            Item           @relation(fields: [itemId], references: [id], onDelete: Cascade)
   userId          String
   user            User           @relation(fields: [userId], references: [id])
+
+  @@unique([itemId, userId], name: "ratingIdentifier")
 }

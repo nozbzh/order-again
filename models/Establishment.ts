@@ -90,6 +90,11 @@ class Establishment {
     try {
       const establishment = await prisma.establishment.findFirst({
         where: { id },
+        select: {
+          id: true,
+          name: true,
+          address: true,
+        },
       });
 
       if (!establishment) {

@@ -5,6 +5,7 @@ import isEmpty from "lodash/isEmpty";
 import debounce from "lodash/debounce";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
+import { useRouter } from "next/router";
 
 import { notifyError, getErrorMessage } from "utils/ui";
 
@@ -18,6 +19,7 @@ const HomePage = ({ establishmentType }: HopePageProps): JSX.Element => {
   const [loading, setLoading] = React.useState(false);
   const [establishment, setEstablishment] = React.useState({});
   const [options, setOptions] = React.useState([]);
+  const router = useRouter();
 
   const handleSearch = async (query: string) => {
     if (!query) {
@@ -56,6 +58,7 @@ const HomePage = ({ establishmentType }: HopePageProps): JSX.Element => {
         getOptionLabel={(option) => option.name}
         onChange={(event, newValue) => {
           setEstablishment(newValue);
+          router.push(`/establishments/${newValue.id}`);
         }}
         renderInput={(params) => (
           <TextField
