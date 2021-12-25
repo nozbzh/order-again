@@ -3,27 +3,12 @@ import { InvalidInputError, NotFoundError } from "errors";
 import logger from "utils/logger";
 import { NOT_FOUND_CODE } from "helpers/constants";
 import {
-  EstablishmentInterface,
-  EstablishmentInternalData,
-  ItemInterface,
-} from "types";
+  Item,
+  Establishment as PrismaEstablishment,
+  EstablishmentType,
+} from "@prisma/client";
 
-// TODO: error handling and Types/Interfaces
-
-// interface NotesData {
-//   [key: string]: NoteInterface;
-// }
-
-// interface NotesInternalData {
-//   id?: number;
-//   lastUpdatedAt?: Date;
-// }
-
-// will be needed for context-aware typeahead search
-enum EstablishmentType {
-  RESTAURANT,
-  GROCERY_STORE,
-}
+// TODO: error handling
 
 class Establishment {
   id: string;
@@ -31,12 +16,10 @@ class Establishment {
   address: string;
   // latitude: string;
   // longitude: string;
-  // type: EstablishmentType;
-  items: ItemInterface[];
+  type: EstablishmentType;
+  items: Item[];
 
-  constructor(
-    attributes: Partial<EstablishmentInterface & EstablishmentInternalData>
-  ) {
+  constructor(attributes: Partial<PrismaEstablishment>) {
     const { id, name, address } = attributes;
 
     if (!name && !address) {
@@ -75,7 +58,7 @@ class Establishment {
   static async create(establishment: {
     name: string;
     address: string;
-  }): Promise<any> {
+  }): Promise<PrismaEstablishment> {
     try {
       return await prisma.establishment.create({
         data: new this(establishment),
@@ -86,7 +69,7 @@ class Establishment {
     }
   }
 
-  static async find(id: string): Promise<any> {
+  static async find(id: string): Promise<Partial<PrismaEstablishment>> {
     try {
       const establishment = await prisma.establishment.findFirst({
         where: { id },
@@ -108,7 +91,7 @@ class Establishment {
     }
   }
 
-  static async all(): Promise<any[]> {
+  static async all(): Promise<PrismaEstablishment[]> {
     try {
       return await prisma.establishment.findMany({});
     } catch (e: any) {
@@ -131,7 +114,10 @@ class Establishment {
     }
   }
 
-  static async findByNameAndType(q: string, type?: EstablishmentType) {
+  static async findByNameAndType(
+    q: string,
+    type?: EstablishmentType
+  ): Promise<Partial<PrismaEstablishment>[]> {
     return await prisma.establishment.findMany({
       where: {
         name: {
@@ -148,12 +134,8 @@ class Establishment {
   }
 
   static async update(
-    establishment: Partial<{
-      id: string;
-      name: string;
-      address: string;
-    }>
-  ): Promise<any> {
+    establishment: Partial<PrismaEstablishment>
+  ): Promise<PrismaEstablishment> {
     try {
       return await prisma.establishment.update({
         where: { id: establishment.id },

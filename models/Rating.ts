@@ -2,9 +2,9 @@ import prisma from "lib/prisma";
 import { InvalidInputError, NotFoundError } from "errors";
 import logger from "utils/logger";
 import { NOT_FOUND_CODE } from "helpers/constants";
-import { RatingInternalData, RatingInterface } from "types";
+import { Rating as PrismaRating } from "@prisma/client";
 
-// TODO: error handling and Types/Interfaces
+// TODO: error handling
 class Rating {
   id: string;
   note?: string;
@@ -12,7 +12,7 @@ class Rating {
   itemId: string;
   userId: string;
 
-  constructor(attributes: Partial<RatingInterface & RatingInternalData>) {
+  constructor(attributes: Partial<PrismaRating>) {
     const { id, value, note, itemId, userId } = attributes;
 
     if (!value) {
@@ -34,7 +34,7 @@ class Rating {
     note?: string;
     itemId: string;
     userId: string;
-  }): Promise<any> {
+  }): Promise<PrismaRating> {
     try {
       return await prisma.rating.create({
         data: new this(rating),
@@ -45,7 +45,7 @@ class Rating {
     }
   }
 
-  static async find(id: string): Promise<any> {
+  static async find(id: string): Promise<PrismaRating> {
     try {
       const rating = await prisma.rating.findFirst({
         where: { id },
@@ -62,7 +62,10 @@ class Rating {
     }
   }
 
-  static async findByUserAndItem(userId: string, itemId: string): Promise<any> {
+  static async findByUserAndItem(
+    userId: string,
+    itemId: string
+  ): Promise<Partial<PrismaRating>> {
     try {
       const rating = await prisma.rating.findFirst({
         where: { itemId, userId },
@@ -80,7 +83,7 @@ class Rating {
     }
   }
 
-  static async all(itemId: string): Promise<any[]> {
+  static async all(itemId: string): Promise<PrismaRating[]> {
     try {
       return await prisma.rating.findMany({ where: { itemId } });
     } catch (e: any) {
@@ -103,13 +106,7 @@ class Rating {
     }
   }
 
-  static async update(
-    rating: Partial<{
-      id: string;
-      value: string;
-      note?: string;
-    }>
-  ): Promise<any> {
+  static async update(rating: Partial<PrismaRating>): Promise<PrismaRating> {
     try {
       return await prisma.rating.update({
         where: { id: rating.id },

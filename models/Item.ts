@@ -2,26 +2,16 @@ import prisma from "lib/prisma";
 import { InvalidInputError, NotFoundError } from "errors";
 import logger from "utils/logger";
 import { NOT_FOUND_CODE } from "helpers/constants";
-import { ItemInterface, ItemInternalData, RatingInterface } from "types";
+import { Item as PrismaItem, Rating } from "@prisma/client";
 
 // TODO: error handling and Types/Interfaces
-
-// interface NotesData {
-//   [key: string]: NoteInterface;
-// }
-
-// interface NotesInternalData {
-//   id?: number;
-//   lastUpdatedAt?: Date;
-// }
-
 class Item {
   id: string;
   name: string;
   establishmentId: string;
-  ratings: RatingInterface[];
+  ratings: Rating[];
 
-  constructor(attributes: Partial<ItemInterface & ItemInternalData>) {
+  constructor(attributes: Partial<PrismaItem>) {
     const { id, name, establishmentId } = attributes;
 
     if (!name) {
@@ -50,7 +40,7 @@ class Item {
     }
   }
 
-  static async find(id: string): Promise<any> {
+  static async find(id: string): Promise<PrismaItem> {
     try {
       const item = await prisma.item.findFirst({
         where: { id },
@@ -70,7 +60,7 @@ class Item {
   static async allByEstablishmentWithUserRatings(
     establishmentId: string,
     userId: string
-  ): Promise<any[]> {
+  ): Promise<Partial<PrismaItem>[]> {
     try {
       return await prisma.item.findMany({
         where: { establishmentId, ratings: { every: { userId } } },
@@ -86,20 +76,6 @@ class Item {
           },
         },
       });
-      // return await prisma.item.findMany({
-      //   where: { establishmentId },
-      //   select: {
-      //     id: true,
-      //     name: true,
-      //     ratings: {
-      //       select: {
-      //         id: true,
-      //         value: true,
-      //         note: true,
-      //       },
-      //     },
-      //   },
-      // });
     } catch (e: any) {
       logger.error(e);
       throw e;
@@ -120,13 +96,7 @@ class Item {
     }
   }
 
-  static async update(
-    item: Partial<{
-      id: string;
-      name: string;
-      address: string;
-    }>
-  ): Promise<any> {
+  static async update(item: Partial<PrismaItem>): Promise<PrismaItem> {
     try {
       return await prisma.item.update({
         where: { id: item.id },
