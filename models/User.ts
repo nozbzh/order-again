@@ -1,7 +1,7 @@
 import prisma from "lib/prisma";
 import { InvalidInputError, NotFoundError } from "errors";
 import logger from "utils/logger";
-import { UserInterface } from "types";
+import { User as PrismaUser } from "@prisma/client";
 
 // TODO: error handling and Types/Interfaces
 class User {
@@ -9,7 +9,7 @@ class User {
   name: string;
   email: string;
 
-  constructor(attributes: Partial<UserInterface>) {
+  constructor(attributes: Partial<PrismaUser>) {
     const { id, name, email } = attributes;
 
     if (!email) {
@@ -24,7 +24,10 @@ class User {
     this.email = email;
   }
 
-  static async create(user: { name: string; email: string }): Promise<any> {
+  static async create(user: {
+    name: string;
+    email: string;
+  }): Promise<PrismaUser> {
     try {
       return await prisma.user.create({
         data: new this(user),
@@ -35,7 +38,7 @@ class User {
     }
   }
 
-  static async find(id: string): Promise<any> {
+  static async find(id: string): Promise<PrismaUser> {
     try {
       const user = await prisma.user.findFirst({
         where: { id },
@@ -52,7 +55,7 @@ class User {
     }
   }
 
-  static async findByEmail(email: string): Promise<any> {
+  static async findByEmail(email: string): Promise<PrismaUser> {
     try {
       return await prisma.user.findFirst({
         where: { email },
@@ -62,41 +65,6 @@ class User {
       throw e;
     }
   }
-
-  // static async delete(id: string): Promise<boolean> {
-  //   try {
-  //     await prisma.user.delete({ where: { id } });
-
-  //     return true;
-  //   } catch (e: any) {
-  //     if (e.code === NOT_FOUND_CODE) {
-  //       throw new NotFoundError("user");
-  //     }
-  //     logger.error(e);
-  //     throw e;
-  //   }
-  // }
-
-  // static async update(
-  //   user: Partial<{
-  //     id: string;
-  //     name: string;
-  //     email: string;
-  //   }>
-  // ): Promise<any> {
-  //   try {
-  //     return await prisma.user.update({
-  //       where: { id: user.id },
-  //       data: user,
-  //     });
-  //   } catch (e: any) {
-  //     if (e.code === NOT_FOUND_CODE) {
-  //       throw new NotFoundError("user");
-  //     }
-  //     logger.error(e);
-  //     throw e;
-  //   }
-  // }
 }
 
 export default User;

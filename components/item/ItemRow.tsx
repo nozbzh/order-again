@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-import { ItemInterface } from "types";
+// import { Item } from "@prisma/client";
+import Item from "models/Item";
 import Ratings from "components/rating/Ratings";
 
 interface ItemRowProps {
-  item: ItemInterface;
+  item: Item;
   establishmentId: string;
 }
 

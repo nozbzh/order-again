@@ -4,7 +4,7 @@ import logger from "utils/logger";
 import { NOT_FOUND_CODE } from "helpers/constants";
 import { Rating as PrismaRating } from "@prisma/client";
 
-// TODO: error handling
+// TODO: error handling and Types/Interfaces
 class Rating {
   id: string;
   note?: string;

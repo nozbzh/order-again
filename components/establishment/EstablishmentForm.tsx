@@ -4,12 +4,12 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
-import { EstablishmentInterface } from "types";
+import { Establishment } from "@prisma/client";
 import { notifyError, notifySuccess, getErrorMessage } from "utils/ui";
 import { Flex, Button } from "components/StyledComponents";
 
 interface EstablishmentFormProps {
-  establishment?: EstablishmentInterface;
+  establishment?: Establishment;
 }
 
 const ErrorMessage = styled.span`
@@ -29,7 +29,7 @@ const EstablishmentForm = ({
 
   const isEdit = Boolean(establishment);
 
-  const onSubmit = async (establishmentData: EstablishmentInterface) => {
+  const onSubmit = async (establishmentData: Establishment) => {
     setLoading(true);
     try {
       if (isEdit) {

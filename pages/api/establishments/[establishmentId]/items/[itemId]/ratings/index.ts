@@ -16,7 +16,12 @@ async function createRating(req: NextApiRequest, res: NextApiResponse) {
 
   const userId = await getUserIdFromJWT(req);
 
-  const rating = await Rating.create({ userId, itemId, value, note });
+  const rating = await Rating.create({
+    userId: userId as string,
+    itemId: itemId as string,
+    value,
+    note,
+  });
 
   return respondCreated(res, rating);
 }
@@ -36,7 +41,7 @@ export default async function handler(
 
     switch (method) {
       case "GET":
-        const ratings = await Rating.all(itemId);
+        const ratings = await Rating.all(itemId as string);
         return respondOk(res, ratings);
       case "POST":
         return await createRating(req, res);

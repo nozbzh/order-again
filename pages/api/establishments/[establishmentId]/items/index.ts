@@ -14,7 +14,10 @@ async function createItem(req: NextApiRequest, res: NextApiResponse) {
   const { establishmentId } = req.query;
   const { name } = req.body;
 
-  const item = await Item.create({ establishmentId, name });
+  const item = await Item.create({
+    establishmentId: establishmentId as string,
+    name,
+  });
 
   return respondCreated(res, item);
 }
@@ -34,8 +37,8 @@ export default async function handler(
     switch (method) {
       case "GET":
         const items = await Item.allByEstablishmentWithUserRatings(
-          establishmentId,
-          userId
+          establishmentId as string,
+          userId as string
         );
         return respondOk(res, items);
       case "POST":

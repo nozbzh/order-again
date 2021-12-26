@@ -24,7 +24,10 @@ export default async function handler(
 
     switch (method) {
       case "GET":
-        const rating = await Rating.findByUserAndItem(userId, itemId);
+        const rating = await Rating.findByUserAndItem(
+          userId as string,
+          itemId as string
+        );
         return respondOk(res, rating);
       default:
         res.setHeader("Allow", ["GET", "POST"]);

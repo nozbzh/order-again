@@ -23,7 +23,9 @@ export default async function handler(
     switch (method) {
       case "GET":
         const { q } = req.query;
-        const establishments = await Establishment.findByNameAndType(q);
+        const establishments = await Establishment.findByNameAndType(
+          q as string
+        );
         return respondOk(res, establishments);
       default:
         res.setHeader("Allow", ["GET"]);

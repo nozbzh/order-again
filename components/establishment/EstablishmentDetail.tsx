@@ -4,13 +4,13 @@ import { useRouter } from "next/router";
 import startCase from "lodash/startCase";
 
 import { notifyError, notifySuccess, getErrorMessage } from "utils/ui";
-import { EstablishmentInterface } from "types";
+import { Establishment } from "@prisma/client";
 import { Button, SubTitle, Flex, Body, Heading } from "../StyledComponents";
 import ItemForm from "@/components/item/ItemForm";
 import ItemList from "@/components/item/ItemList";
 
 interface EstablishmentDetailProps {
-  establishment: EstablishmentInterface;
+  establishment: Establishment;
 }
 
 // TODO: how to model and fetch all associated items?

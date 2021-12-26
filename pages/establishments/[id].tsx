@@ -3,11 +3,11 @@ import React from "react";
 import Establishment from "models/Establishment";
 import EstablishmentDetail from "components//establishment/EstablishmentDetail";
 
-import { EstablishmentInterface } from "types";
+import { Establishment as PrismaEstablishment } from "@prisma/client";
 import logger from "utils/logger";
 
 interface EstablishmentPageProps {
-  establishment: EstablishmentInterface;
+  establishment: PrismaEstablishment;
 }
 
 export async function getServerSideProps(context) {

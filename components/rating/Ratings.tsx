@@ -4,10 +4,10 @@ import get from "lodash/get";
 
 import Rating from "./Rating";
 import { notifyError, notifySuccess, getErrorMessage } from "utils/ui";
-import { RatingInterface } from "types";
+import { Rating as RatingType } from "@prisma/client";
 
 interface RatingsProps {
-  ratings: RatingInterface[];
+  ratings: RatingType[];
   itemId: string;
   establishmentId: string;
 }

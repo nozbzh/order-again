@@ -4,12 +4,12 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
-import { ItemInterface } from "types";
+import { Item } from "@prisma/client";
 import { notifyError, notifySuccess, getErrorMessage } from "utils/ui";
 import { Flex, Button } from "components/StyledComponents";
 
 interface ItemFormProps {
-  item?: ItemInterface;
+  item?: Item;
   establishmentId: string;
   onSuccess: () => void;
 }
@@ -32,7 +32,7 @@ const ItemForm = ({
 
   const isEdit = Boolean(item);
 
-  const onSubmit = async (itemData: ItemInterface) => {
+  const onSubmit = async (itemData: Item) => {
     setLoading(true);
     try {
       if (isEdit) {

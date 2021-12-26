@@ -8,7 +8,7 @@ import {
   EstablishmentType,
 } from "@prisma/client";
 
-// TODO: error handling
+// TODO: error handling and Types/Interfaces
 
 class Establishment {
   id: string;
